@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "recaptcha_dotnet", "recaptcha_dotnet\recaptcha_dotnet.csproj", "{988E8A00-1295-4F11-A876-18E464D7B4F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{988E8A00-1295-4F11-A876-18E464D7B4F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{988E8A00-1295-4F11-A876-18E464D7B4F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{988E8A00-1295-4F11-A876-18E464D7B4F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{988E8A00-1295-4F11-A876-18E464D7B4F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9F500C8-44AE-419B-9F56-9FCB340B3413}
+	EndGlobalSection
+EndGlobal
