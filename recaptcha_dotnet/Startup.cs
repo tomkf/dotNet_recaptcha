@@ -19,11 +19,22 @@ namespace recaptcha_dotnet
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
-        }
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json",
+                            optional: false,
+                            reloadOnChange: true)
+            .AddEnvironmentVariables();
 
+            // Use the Secret Manager during development.
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+            Configuration = builder.Build();
+        }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -36,9 +47,11 @@ namespace recaptcha_dotnet
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //sqlite DB configueed to use the appsecrets connection string
+            string connectionString = Configuration.GetSection("Demo:ConnectionString").Value;
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                     options.UseSqlServer(connectionString));
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -71,7 +84,7 @@ namespace recaptcha_dotnet
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
