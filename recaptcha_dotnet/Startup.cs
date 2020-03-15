@@ -47,19 +47,40 @@ namespace recaptcha_dotnet
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //sqlite DB configueed to use the appsecrets connection string
+
+            services.AddAuthentication()
+        .AddGoogle(options =>
+        {
+            IConfigurationSection googleAuthNSection =
+                Configuration.GetSection("Authentication:Google");
+
+            options.ClientId = googleAuthNSection["ClientId"];
+            options.ClientSecret = googleAuthNSection["ClientSecret"];
+        });
+
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+
+
+            //sqlServer DB configueed to use the appsecrets connection string
             string connectionString = Configuration.GetSection("Demo:ConnectionString").Value;
             services.AddDbContext<ApplicationDbContext>(options =>
                      options.UseSqlServer(connectionString));
-
+            
+            
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
             services.AddRecaptcha(new RecaptchaOptions
             {
-                SiteKey = Configuration["Recaptcha:SiteKey"],
-                SecretKey = Configuration["Recaptcha:SecretKey"]
+                SiteKey = Configuration.GetSection("Recaptcha:SiteKey").Value,
+                SecretKey = Configuration.GetSection("Recaptcha:SecretKey").Value
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
