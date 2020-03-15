@@ -59,6 +59,13 @@ namespace recaptcha_dotnet
         });
 
 
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+
+
             //sqlServer DB configueed to use the appsecrets connection string
             string connectionString = Configuration.GetSection("Demo:ConnectionString").Value;
             services.AddDbContext<ApplicationDbContext>(options =>
